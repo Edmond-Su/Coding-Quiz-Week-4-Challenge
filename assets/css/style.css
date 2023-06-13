@@ -1,0 +1,40 @@
+header{
+    margin-top: 30px;
+}
+
+#timer {
+    margin: auto;
+    float: right;
+    margin-right: 8%;
+    padding-right: 2%
+}
+
+#highscore {
+    display: inline;
+    margin: 0 2%;
+}
+main{
+    margin-top: 5%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 35px;
+}
+
+#desc {
+    margin: auto;
+    width: 60%;
+    text-align: center;
+    font-size: 18px;
+}
+
+#startPage div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#startButton {
+    margin-top: 2%;
+}
