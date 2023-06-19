@@ -1,12 +1,20 @@
 //Linking a variable to start button in html
 var startBtn = document.getElementById("startButton");
 
-var timerElement = document.getElementById("timer")
+var timerElement = document.getElementById("timer");
 
-//Creating a timer count variable
+var titleElement = document.getElementById("title");
+
+var descElement = document.getElementById("desc")
+
+var finishPageElement = document.getElementById("finishPage")
+
+//Creating a variable
 var timerCount;
-
 var timer;
+var isFinished;
+var question;
+
 
 // Creating objects for each question
 var question1 = {
@@ -52,24 +60,6 @@ var question5 = {
     wrong2:"For loops",
     wrong3:"Terminal/ Bash",
     correct:"Console.log",
-};
-
-var question6 = {
-    random: ,
-    question: "",
-    wrong1:"",
-    wrong2:"",
-    wrong3:"",
-    correct:"",
-};
-
-var question7 = {
-    random: ,
-    question: "",
-    wrong1:"",
-    wrong2:"",
-    wrong3:"",
-    correct:"",
 };
 
 var questions = [question1, question2,question3,question4,question5];
@@ -118,15 +108,50 @@ var questionsArr = [
 ];
 
 function startGame() {
-    timerCount = 75
+    timerCount = 75;
+    isFinished = false;
+    startTimer();
+    hideStart();
+    showQuestions();
+
 };
 
 function startTimer(){
     timer = setInterval(function(){
-
-    })
+        timerElement.textContent = timerCount;
+        timerCount--;
+        if (timerCount >= 0){
+            if (isFinished){
+                clearInterval(timer);
+                finishGame();
+            };
+        };
+        if (timerCount === 0){
+            clearInterval(timer);
+            finishGame();
+        };
+    }, 1000);
 }
+
+function hideStart(){
+    titleElement.style.display = "none";
+    descElement.style.display = "none";
+    startBtn.style.display = "none";
+}
+
+function showQuestions(){
+
+}
+
+function finishGame(){
+    finishPageElement.style.display = "block";
+    
+}
+
+
 //
-startBtn.addEventListener("click", function(){
-    console.log("CLICK")
-});
+// startBtn.addEventListener("click", function(){
+//     console.log("CLICK")
+// });
+
+startBtn.addEventListener("click", startGame)
