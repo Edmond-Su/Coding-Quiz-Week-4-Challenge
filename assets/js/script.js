@@ -152,25 +152,22 @@ function showQuestion(){
 
 function checkCorrect(event){
     var chosenAnswer = event.target;
-    if (chosenAnswer.matches("button"===false)){
-        return
-    }
-    var isCorrect = chosenAnswer.getAttribute('correct');
-    console.log(chosenAnswer)
-    console.log(isCorrect)
-    if (isCorrect === "true"){
-        console.log("correct");
-        questionNum++;
-        if (questionNum < questionsArr.length){
-            showQuestion();
-        } else{
-            isFinished = true;
-        }
+    //Checks if a button was clicked
+    if (chosenAnswer.matches("button") === true){
+        var isCorrect = chosenAnswer.getAttribute('correct');
+        if (isCorrect === "true"){
+            questionNum++;
+            if (questionNum < questionsArr.length){
+                showQuestion();
+            } else{
+                isFinished = true;
+        };
         
     } else{
-        console.log("wrong")
         timerCount = timerCount - 15;
-    }
+    };
+    };
+    
 
 }
 //Shows finish section, shows score and hides question section and answer buttons
