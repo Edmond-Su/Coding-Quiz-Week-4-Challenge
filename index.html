@@ -23,13 +23,22 @@
                 <button id="startButton"> Start Quiz</button>
             </div>
         </section>
+        <section id="questionsPage">
+            <h2 id="question"></h2>
+            <ul>
+                <li id="answer1"></li>
+                <li id="answer2"></li>
+                <li id="answer3"></li>
+                <li id="answer4"></li>
+            </ul>
+        </section>
         <section id="finishPage">
             <h2>All done!</h2>
             <p>Your final score is <span id="scoreNum"></span></p>
-            <form action="./highscore.html">
+            <form>
                 <label for="initials">Enter initials: </label>
                 <input type="text" id="initials" name="initials">
-                <input type="submit" value="Submit">
+                <button id="submit">Submit</button>
             </form>
         </section>
     </main>

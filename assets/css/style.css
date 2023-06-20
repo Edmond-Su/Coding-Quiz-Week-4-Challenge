@@ -47,3 +47,14 @@ a{
 #finishPage{
     display:none;
 }
+#question{
+    display: none;
+}
+
+ul{
+    list-style: none;
+}
+button{
+    color: white;
+    background-color: rgb(46, 16, 75);
+}
