@@ -1,22 +1,21 @@
-//Linking variables to start page elements
+//Linking variables to page elements
+var startPageEl = document.getElementById("startPage");
 var startBtn = document.getElementById("startButton");
-var titleEl = document.getElementById("title");
-var descEl = document.getElementById("desc");
-//linking a variable to the timer element
+
 var timerEl = document.getElementById("timer");
-//linking variables to finished page elements
+
 var finishPageEl = document.getElementById("finishPage");
 var scoreNumEl = document.getElementById("scoreNum");
 var initialsEl = document.getElementById("initials")
 var finishBtn = document.getElementById("submit")
 
-
 var questionEl = document.getElementById("question");
+var answerlistEl = document.getElementById("answerlist");
 var answer1El = document.getElementById("answer1");
 var answer2El = document.getElementById("answer2");
 var answer3El = document.getElementById("answer3");
 var answer4El = document.getElementById("answer4");
-
+//creating buttons for answers
 var answer1BtnEl = document.createElement('button');
 var answer2BtnEl = document.createElement('button');
 var answer3BtnEl = document.createElement('button');
@@ -25,13 +24,12 @@ var answer4BtnEl = document.createElement('button');
 //Creating variables
 var timerCount;
 var timer;
-var isFinished;
+var isFinished = false;
 var questionNum = 0;
 var currentQuestion;
-
 var scoreboardArr = [];
 
-// Creating array of question objects
+// Creating array of objects with questions and answers
 var questionsArr = [
     {
         question: "Commonly used data types DO NOT include: ",
@@ -81,7 +79,6 @@ function init(){
     if (scoreboardArr === null ){
         scoreboardArr = []
     }
-    console.log(scoreboardArr)
 }
 
 function startGame() {
@@ -95,10 +92,11 @@ function startGame() {
     showQuestion();
     startTimer();
 };
-
+//Timer function
 function startTimer(){
     timer = setInterval(function(){
         timerCount--;
+        //Prints time on screen
         timerEl.textContent = timerCount;
         //Checks if game is finished while there is time left. If finished stops timer and ends game
         if (timerCount >= 0){
@@ -118,48 +116,45 @@ function startTimer(){
 }
 //function to hide start elements
 function hideStart(){
-    titleEl.style.display = "none";
-    descEl.style.display = "none";
-    startBtn.style.display = "none";
+    startPageEl.setAttribute('style','display:none');
+    startBtn.setAttribute('style','display:none');
 }
 //function to show the current question on screen
 function showQuestion(){
+    //Clearing question and answers
+    questionEl.innerHTML = "";
+    answerlistEl.innerHTML = "";
+    //Assigning the object to seperate variable
     currentQuestion = questionsArr[questionNum];
+    //Rendering current question
     questionEl.textContent = currentQuestion.question;
-    answer1BtnEl.textContent = '1.' + currentQuestion.answer1;
-    if (currentQuestion.answer1 === currentQuestion.correct) {
-        answer1BtnEl.setAttribute('correct',true)
-    } else{
-        answer1BtnEl.setAttribute('correct',false)
-    }
-    answer1El.appendChild(answer1BtnEl);
-    answer2BtnEl.textContent = '2.' + currentQuestion.answer2;
-    if (currentQuestion.answer2 === currentQuestion.correct) {
-        answer2BtnEl.setAttribute('correct',true)
-    } else{
-        answer2BtnEl.setAttribute('correct',false)
-    }
-    answer2El.appendChild(answer2BtnEl);
-    answer3BtnEl.textContent = '3.' + currentQuestion.answer3;
-    if (currentQuestion.answer3 === currentQuestion.correct) {
-        answer3BtnEl.setAttribute('correct',true)
-    } else{
-        answer3BtnEl.setAttribute('correct',false)
-    }
-    answer3El.appendChild(answer3BtnEl);
-    answer4BtnEl.textContent = '4.' + currentQuestion.answer4;
-    if (currentQuestion.answer4 === currentQuestion.correct) {
-        answer4BtnEl.setAttribute('correct',true)
-    } else{
-        answer4BtnEl.setAttribute('correct',false)
-    }
-    answer4El.appendChild(answer4BtnEl);
-    questionEl.setAttribute('style','display:block')
+    //Creating array of answers
+    var currentAnswers = [currentQuestion.answer1,currentQuestion.answer2,currentQuestion.answer3,currentQuestion.answer4]
+    //Loop creating a button for each answer
+    for (var i = 0; i < currentAnswers.length; i++) {
+        var answerNum = i+1;
+        var li = document.createElement('li');
+        var answerBtn = document.createElement('button');
+        answerBtn.textContent = answerNum+". "+ currentAnswers[i];
+        //If this button matches the correct answer the "correct" attribute is assigned and set to true otherwise it is set to false
+        if (currentAnswers[i] === currentQuestion.correct) {
+            answerBtn.setAttribute('correct',true);
+        } else{
+            answerBtn.setAttribute('correct',false);
+        };
+        //Appending the created li and btn to be rendered on screen
+        li.appendChild(answerBtn);
+        answerlistEl.appendChild(li);
+    };
 
+    questionEl.setAttribute('style','display:block');
 }
 
 function checkCorrect(event){
     var chosenAnswer = event.target;
+    if (chosenAnswer.matches("button"===false)){
+        return
+    }
     var isCorrect = chosenAnswer.getAttribute('correct');
     console.log(chosenAnswer)
     console.log(isCorrect)
@@ -181,11 +176,10 @@ function checkCorrect(event){
 //Shows finish section, shows score and hides question section and answer buttons
 function finishGame(){
     scoreNumEl.textContent = timerCount
+    questionEl.innerHTML = ""
     questionEl.setAttribute('style','display:none')
-    answer1BtnEl.setAttribute('style','display:none')
-    answer2BtnEl.setAttribute('style','display:none')
-    answer3BtnEl.setAttribute('style','display:none')
-    answer4BtnEl.setAttribute('style','display:none')
+    answerlistEl.innerHTML = ""
+    answerlistEl.setAttribute('style','display:none')
     finishPageEl.style.display = "block";
 }
 
@@ -204,13 +198,10 @@ function submitFormHandler(event){
     localStorage.setItem("scores", JSON.stringify(scoreboardArr))
 
     //redirects to highscore page
-    // window.location.href = "./highscore.html"
+    window.location.href = "./highscore.html"
 }
 
-answer1BtnEl.addEventListener('click',checkCorrect)
-answer2BtnEl.addEventListener('click',checkCorrect)
-answer3BtnEl.addEventListener('click',checkCorrect)
-answer4BtnEl.addEventListener('click',checkCorrect)
+answerlistEl.addEventListener("click", checkCorrect)
 
 startBtn.addEventListener("click", startGame)
 
