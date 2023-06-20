@@ -11,15 +11,6 @@ var finishBtn = document.getElementById("submit")
 
 var questionEl = document.getElementById("question");
 var answerlistEl = document.getElementById("answerlist");
-var answer1El = document.getElementById("answer1");
-var answer2El = document.getElementById("answer2");
-var answer3El = document.getElementById("answer3");
-var answer4El = document.getElementById("answer4");
-//creating buttons for answers
-var answer1BtnEl = document.createElement('button');
-var answer2BtnEl = document.createElement('button');
-var answer3BtnEl = document.createElement('button');
-var answer4BtnEl = document.createElement('button');
 
 //Creating variables
 var timerCount;
